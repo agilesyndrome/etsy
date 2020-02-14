@@ -163,6 +163,11 @@ module Etsy
       self.class.get_all("/listings/#{id}/variations", oauth.merge(options))
     end
 
+    def inventory(options={})
+      options.merge!(:require_secure => true)
+      self.class.get_all("/listings/#{id}/inventory", oauth.merge(options))
+    end
+
     # If these are your desired variations:
     # - Dimensions: 1 x 2 inches
     # - Dimensions: 2 x 4 inches
@@ -204,6 +209,11 @@ module Etsy
       options[:variations] = JSON.dump(options.delete(:variations))
       options[:require_secure] = true
       self.class.put("/listings/#{id}/variations", options)
+    end
+
+    def update_inventory(options)
+      options[:require_secure] = true
+      self.class.put("/listings/#{id}/inventory", options)
     end
 
     def black_and_white?
